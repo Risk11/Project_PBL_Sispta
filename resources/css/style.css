@@ -1,0 +1,72 @@
+		body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #9e9c9c;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+        header {
+            background-color: #000000;
+            color: #ffff;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logout {
+            font-size: 20px;
+            font-weight: bolder;
+            color:#fcfcfc;
+            padding-right:10px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bolder;
+        }
+        .logo img {
+            background-color: #070707;
+            height: 60px;
+            width: auto;
+            margin-right: 10px;
+            padding: 5px;
+        }
+        nav {
+            display: flex;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0 20px;
+            font-size: 16px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+        a {
+            text-decoration: none; /* Untuk menghilangkan garis bawah default */
+            padding: 5px 10px; /* Atur jarak padding */
+            border: 1px solid #000; /* Atur border */
+            border-radius: 5px; /* Atur sudut */
+        }
+
+        /* Gaya saat tombol disentuh */
+        a:hover {
+            background-color: #7cbde9; /* Atur warna latar belakang saat disentuh */
+            text-decoration: none;
+        }
