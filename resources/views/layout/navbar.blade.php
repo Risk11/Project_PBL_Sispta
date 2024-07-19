@@ -47,7 +47,7 @@
 
 
             @auth
-                @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'kaprodi')
+                @if (Auth::user()->level == 'Admin')
                     <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
                         <i class="bi bi-people-fill"></i>
@@ -124,17 +124,18 @@
                             <a class="collapse-item" href="\sidang">Kelola Sidang</a>
                         @endif
                     @endauth
-                    {{--  @auth
-                        @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'dosen' || Auth::user()->level == 'pembimbing1' || Auth::user()->level == 'pembimbing2' || Auth::user()->level == 'Tim_Penguji')
+                    @auth
+                        @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'kaprodi')
                             <a class="collapse-item" href="\penilaian">Kelola Nilai</a>
                         @endif
-                    @endauth --}}
+                    @endauth
                     {{-- <a class="collapse-item" href="\proposals">Kelola Proposal</a>
                     {{-- <a class="collapse-item" href="\jadwal">Kelola Jadwal</a> --}}
                     {{-- <a class="collapse-item" href="\dokumen">Kelola Dokumen</a> --}}
                 </div>
             </div>
         </li>
+
 
         <!-- Divider -->
         <hr class="sidebar-divider">

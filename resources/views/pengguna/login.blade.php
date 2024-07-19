@@ -290,7 +290,7 @@
     @endif
 
     <div class="container" id="container">
-        <div class="form-container sign-up-container">
+        {{-- <div class="form-container sign-up-container">
             <form action="{{ route('register') }}"method="POST">
                 @csrf
                 <h1>Create Account</h1>
@@ -306,7 +306,7 @@
                 <input type="password" name="password_confirmation" placeholder="Confirm Password" required />
                 <button type="submit">Sign Up</button>
             </form>
-        </div>
+        </div> --}}
         <div class="form-container sign-in-container">
             {{-- <form action="{{ route('postlogin') }}" method="POST">
                 @csrf --}}
@@ -322,7 +322,7 @@
                 <input type="email" name="email" placeholder="Email" required />
                 <input type="password" name="password" placeholder="Password" required />
                 <a href="{{ route('password.change') }}">Forgot your password?</a>
-                <button type="submit">Sign In</button>
+                <button type="submit" id="btn-login">Sign In</button>
             </form>
         </div>
         <div class="overlay-container">

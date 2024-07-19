@@ -1,6 +1,7 @@
 @extends('layout.template')
 
 @section('main')
+
     <div class="card text-center mb-5">
         <div class="card-body">
             <h1>Data Ruangan</h1>
@@ -18,19 +19,6 @@
     @endif
     <div class="row py-3">
         <div class="col-md-12 d-flex justify-content-between align-items-center">
-            <div>
-                <label>
-                    Show
-                    <select name="entries" id="entries" class="form-select form-select-sm d-inline-block"
-                        style="width: auto; display: inline;">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    entries
-                </label>
-            </div>
             <div id="datatable_info" class="mr-3"></div>
             {{-- <div>
                 <label>
@@ -46,10 +34,9 @@
         </div>
     </div>
     <table class="table table-bordered">
-        <thead class="table-secondary  text-center">
+        <thead class="table-secondary text-center">
             <tr>
                 <th>No</th>
-                <th>ID</th>
                 <th>Nama Ruangan</th>
                 <th>Status</th>
                 <th>Aksi</th>
@@ -57,23 +44,23 @@
         </thead>
         <tbody>
             @if ($ruangan->count() > 0)
-                @foreach ($ruangan as $ruangan)
+                @foreach ($ruangan as $item)
                     <tr>
                         <td class="align-middle">{{ $loop->iteration }}</td>
-                        <td class="align-middle">{{ $ruangan->id }}</td>
-                        <td class="align-middle">{{ $ruangan->nama }}</td>
-                        <td class="align-middle">{{ $ruangan->status }}</td>
+                        <td class="align-middle">{{ $item->nama }}</td>
+                        <td class="align-middle">{{ $item->status }}</td>
                         <td class="align-middle text-center">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <a href="{{ route('ruangan.show', $ruangan) }}" class="btn btn-info mr-1"><i
+                                <a href="{{ route('ruangan.show', $item->id) }}" class="btn btn-info mr-1"><i
                                         class="bi bi-ticket-detailed-fill"></i> Detail</a>
-                                <a href="{{ route('ruangan.edit', $ruangan->id) }}" class="btn btn-warning mr-1"><i
+                                <a href="{{ route('ruangan.edit', $item->id) }}" class="btn btn-warning mr-1"><i
                                         class="bi bi-pencil-square"></i> Edit</a>
-                                <form action="{{ route('ruangan.destroy', $ruangan->id) }}" method="POST" class="d-inline"
+                                <form action="{{ route('ruangan.destroy', $item->id) }}" method="POST" class="d-inline"
                                     onsubmit="return confirm('Delete?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger"><i class="bi bi-trash-fill"></i> Delete</button>
+                                    <button class="btn btn-danger"><i class="bi bi-trash-fill"></i>
+                                        Delete</button>
                                 </form>
                             </div>
                         </td>
@@ -81,24 +68,43 @@
                 @endforeach
             @else
                 <tr>
-                    <td class="align-middle text-center" colspan="6">Ruangan tidak ditemukan</td>
+                    <td class="align-middle text-center" colspan="5">Ruangan tidak ditemukan</td>
                 </tr>
             @endif
         </tbody>
     </table>
-    <nav aria-label="...">
+
+    <nav>
         <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
+            @if ($ruangan->onFirstPage())
+                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+            @else
+                <li class="page-item"><a class="page-link" href="{{ $ruangan->previousPageUrl() }}"
+                        rel="prev">Previous</a></li>
+            @endif
+
+            @php
+                $currentPage = $ruangan->currentPage();
+                $lastPage = $ruangan->lastPage();
+                $pageRange = 3; // Range of page links to display
+
+                $startPage = max($currentPage - $pageRange, 1);
+                $endPage = min($currentPage + $pageRange, $lastPage);
+            @endphp
+
+            @for ($i = $startPage; $i <= $endPage; $i++)
+                <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $ruangan->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+
+            @if ($ruangan->hasMorePages())
+                <li class="page-item"><a class="page-link" href="{{ $ruangan->nextPageUrl() }}" rel="next">Next</a>
+                </li>
+            @else
+                <li class="page-item disabled"><span class="page-link">Next</span></li>
+            @endif
         </ul>
     </nav>
+
 @endsection

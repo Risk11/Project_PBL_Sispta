@@ -18,14 +18,14 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-                {{-- <div class="mb-3">
+                <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}">
                     @error('email')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                </div> --}}
-                {{-- <div class="mb-3">
+                </div>
+                <div class="mb-3">
                     <label for="password" class="form-label">New Password</label>
                     <input type="password" class="form-control" id="password" name="password">
                     @error('password')
@@ -35,7 +35,7 @@
                 <div class="mb-3">
                     <label for="password_confirmation" class="form-label">Confirm New Password</label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
-                </div> --}}
+                </div>
                 <div class="mb-3">
                     <label for="level">Level (Optional):</label>
                     <select class="form-control" id="level" name="level">

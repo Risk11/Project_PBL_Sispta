@@ -77,10 +77,7 @@
                             <td class="align-middle text-center">
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     @auth
-                                        @if (Auth::user()->level == 'Admin' ||
-                                                Auth::user()->level == 'kaprodi' ||
-                                                Auth::user()->level == 'dosen' ||
-                                                Auth::user()->level == 'pembimbing1')
+                                        @if (Auth::user()->level == 'Admin' || Auth::user()->level == 'kaprodi')
                                             <a href="{{ route('sidang.show', $sidang->id) }}" class="btn btn-info mr-1"><i
                                                     class="bi bi-ticket-detailed-fill"></i> Detail</a>
                                         @endif
@@ -209,48 +206,37 @@
             @endif
         </tbody>
     </table>
-    <nav aria-label="...">
-        <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
-    {{-- <nav aria-label="Page navigation">
+    <nav>
         <ul class="pagination">
             @if ($sidangs->onFirstPage())
-                <li class="page-item disabled" aria-disabled="true">
-                    <span class="page-link">Previous</span>
-                </li>
+                <li class="page-item disabled"><span class="page-link">Previous</span></li>
             @else
-                <li class="page-item">
-                    <a class="page-link" href="{{ $sidangs->previousPageUrl() }}" rel="prev">Previous</a>
-                </li>
+                <li class="page-item"><a class="page-link" href="{{ $sidangs->previousPageUrl() }}"
+                        rel="prev">Previous</a></li>
             @endif
 
-            @for ($i = 1; $i <= $sidangs->lastPage(); $i++)
-                <li class="page-item {{ $i === $sidangs->currentPage() ? 'active' : '' }}"
-                    aria-current="{{ $i === $sidangs->currentPage() ? 'page' : '' }}">
+            @php
+                $currentPage = $sidangs->currentPage();
+                $lastPage = $sidangs->lastPage();
+                $pageRange = 3; // Range of page links to display
+
+                $startPage = max($currentPage - $pageRange, 1);
+                $endPage = min($currentPage + $pageRange, $lastPage);
+            @endphp
+
+            @for ($i = $startPage; $i <= $endPage; $i++)
+                <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
                     <a class="page-link" href="{{ $sidangs->url($i) }}">{{ $i }}</a>
                 </li>
             @endfor
+
             @if ($sidangs->hasMorePages())
-                <li class="page-item">
-                    <a class="page-link" href="{{ $sidangs->nextPageUrl() }}" rel="next">Next</a>
+                <li class="page-item"><a class="page-link" href="{{ $sidangs->nextPageUrl() }}" rel="next">Next</a>
                 </li>
             @else
-                <li class="page-item disabled" aria-disabled="true">
-                    <span class="page-link">Next</span>
-                </li>
+                <li class="page-item disabled"><span class="page-link">Next</span></li>
             @endif
         </ul>
-    </nav> --}}
+    </nav>
+
 @endsection

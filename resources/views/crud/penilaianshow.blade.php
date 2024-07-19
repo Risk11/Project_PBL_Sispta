@@ -13,48 +13,49 @@
         <th>Total Nilai</th>
         <th>Komentar</th>
         <tbody>
+
+            @if ($penilaianpembimbing1)
+                <tr>
+                    <td>1</td>
+                    <td>Pembimbing 1</td>
+                    <td>{{ $penilaianpembimbing1->dosenpenguji->nama }}</td>
+                    <td>{{ $penilaianpembimbing1->nilai }}</td>
+                    <td>{{ $penilaianpembimbing1->komentar }}</td>
+                </tr>
+            @else
+                <tr>
+                    <td>Pembimbing 1</td>
+                    <td colspan="4">Data penilaian untuk Pembimbing 1 tidak tersedia.</td>
+                </tr>
+            @endif
+
+            @if ($penilaianpembimbing2)
+                <tr>
+                    <td>2</td>
+                    <td>Pembimbing 2</td>
+                    <td>{{ $penilaianpembimbing2->dosenpenguji->nama }}</td>
+                    <td>{{ $penilaianpembimbing2->nilai }}</td>
+                    <td>{{ $penilaianpembimbing2->komentar }}</td>
+                </tr>
+            @else
+                <tr>
+                    <td>Pembimbing 2</td>
+                    <td colspan="4">Data penilaian untuk Pembimbing 2 tidak tersedia.</td>
+                </tr>
+            @endif
+            @if ($ratapendidikan !== null)
+                <tr>
+
+                    <td>Rata-rata Pendidikan</td>
+                    <td colspan="4">{{ $ratapendidikan }}</td>
+                </tr>
+            @else
+                <tr>
+                    <td>Rata-rata Pendidikan</td>
+                    <td colspan="4">Rata-rata Pendidikan belum tersedia.</td>
+                </tr>
+            @endif
             @if ($penilaianketuasidang)
-                @if ($penilaianpembimbing1)
-                    <tr>
-                        <td>1</td>
-                        <td>Pembimbing 1</td>
-                        <td>{{ $penilaianpembimbing1->dosenpenguji->nama }}</td>
-                        <td>{{ $penilaianpembimbing1->nilai }}</td>
-                        <td>{{ $penilaianpembimbing1->komentar }}</td>
-                    </tr>
-                @else
-                    <tr>
-                        <td>Pembimbing 1</td>
-                        <td colspan="4">Data penilaian untuk Pembimbing 1 tidak tersedia.</td>
-                    </tr>
-                @endif
-
-                @if ($penilaianpembimbing2)
-                    <tr>
-                        <td>2</td>
-                        <td>Pembimbing 2</td>
-                        <td>{{ $penilaianpembimbing2->dosenpenguji->nama }}</td>
-                        <td>{{ $penilaianpembimbing2->nilai }}</td>
-                        <td>{{ $penilaianpembimbing2->komentar }}</td>
-                    </tr>
-                @else
-                    <tr>
-                        <td>Pembimbing 2</td>
-                        <td colspan="4">Data penilaian untuk Pembimbing 2 tidak tersedia.</td>
-                    </tr>
-                @endif
-                @if ($ratapendidikan !== null)
-                    <tr>
-
-                        <td>Rata-rata Pendidikan</td>
-                        <td colspan="4">{{ $ratapendidikan }}</td>
-                    </tr>
-                @else
-                    <tr>
-                        <td>Rata-rata Pendidikan</td>
-                        <td colspan="4">Rata-rata Pendidikan belum tersedia.</td>
-                    </tr>
-                @endif
                 <tr>
                     <td>4</td>
                     <td>Ketua Sidang</td>

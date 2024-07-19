@@ -75,45 +75,6 @@
                 <input type="file" name="dokumen_laporan_tugas_akhir" id="dokumen_laporan_tugas_akhir"
                     class="form-control">
             </div>
-            {{-- <div class="form-group" style="display: flex;">
-                <label for="status" style="margin-right: 10px;">Status:</label>
-                </div>
-                <div style="display: flex;">
-                <div style="margin-right: 10px;">
-                    <input type="checkbox" id="status_menunggu" name="status" value="Menunggu"
-                        onclick="toggleCheckboxes(this)">
-                    <label for="status_menunggu">Menunggu</label>
-                </div>
-                <div style="margin-right: 10px;">
-                    <input type="checkbox" id="status_disetujui" name="status" value="Disetujui"
-                        onclick="toggleCheckboxes(this)">
-                    <label for="status_disetujui">Disetujui</label>
-                </div>
-                <div style="margin-right: 10px;">
-                    <input type="checkbox" id="status_ditolak" name="status" value="Ditolak"
-                        onclick="toggleCheckboxes(this)">
-                    <label for="status_ditolak">Ditolak</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="status_selesai" name="status" value="Selesai"
-                        onclick="toggleCheckboxes(this)">
-                    <label for="status_selesai">Selesai</label>
-                </div>
-            </div>
-
-
-            <script>
-                function toggleCheckboxes(checkbox) {
-                    var checkboxes = document.getElementsByName('status');
-                    checkboxes.forEach(function(item) {
-                        if (item !== checkbox) {
-                            item.checked = false;
-                        }
-                    });
-                }
-            </script> --}}
-
-
             <button type="submit" class="btn btn-primary my-3">Simpan</button>
         </form>
     </div>

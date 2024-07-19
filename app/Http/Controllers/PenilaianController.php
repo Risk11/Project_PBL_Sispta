@@ -17,7 +17,7 @@ class PenilaianController extends Controller
 {
     public function index()
     {
-        $penilaians = Penilaian::with('dosenPenguji', 'tugasAkhir')->paginate(10);
+        $penilaians = Penilaian::with('dosenPenguji', 'tugasAkhir')->paginate(5);
 
         foreach ($penilaians as $penilaian) {
             Log::info('Penilaian: ', ['id' => $penilaian->id, 'dosenPenguji' => $penilaian->dosenPenguji]);
@@ -25,29 +25,9 @@ class PenilaianController extends Controller
 
         return view('pages.penilaian', compact('penilaians'));
     }
-    public function filterData(Request $request)
-    {
-        $query = Penilaian::query();
-
-        // Lakukan filter berdasarkan input request yang diterima
-        if ($request->filled('search')) {
-            $query->where('Judul', 'like', '%' . $request->input('search') . '%');
-        }
-
-        // Lakukan paginate dengan jumlah item per halaman
-        $penilaians = $query->paginate(10); // 10 adalah jumlah item per halaman
-
-        return view('pages.penilaian', compact('penilaians'));
-    }
     public function export()
     {
         return Excel::download(new PenilaianExport, 'penilaian.xlsx');
-    }
-    public function show($id)
-    {
-        $penilaian = Penilaian::with('tugasAkhir', 'dosenPenguji')->findOrFail($id);
-
-        return view('crud.penilaianshow', compact('penilaian'));
     }
 
     public function create()

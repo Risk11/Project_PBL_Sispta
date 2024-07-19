@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Validator;
 
 class RuanganController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $ruangan = ruangan::all();
-
+        $ruangan = ruangan::paginate(5);
         return view('pages.ruangan', compact('ruangan'));
     }
+
+
     public function create()
     {
         return view('crud.ruangancreate');

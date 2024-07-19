@@ -21,28 +21,33 @@ class SidangController extends Controller
 {
     public function index(Request $request)
     {
-        if(Auth::user()->level == 'dosen'){
-        $dosens = Dosen::where('email', Auth::user()->email)->first();
-        $sidangs = Sidang::where('ketua_sidang',$dosens->id)->orwhere('sekretaris_sidang',$dosens->id)->orwhere('penguji1',$dosens->id)->orwhere('penguji2',$dosens->id)->get();
-        $tugasakhirs = TugasAkhir::where('pembimbing1', $dosens->nama)
-                                        ->orWhere('pembimbing2', $dosens->nama)
-                                        ->get();
+        $user = Auth::user();
+        if ($user->level == 'dosen') {
+            $dosen = Dosen::where('email', $user->email)->first();
+            $sidangs = Sidang::where('ketua_sidang', $dosen->id)
+                            ->orWhere('sekretaris_sidang', $dosen->id)
+                            ->orWhere('penguji1', $dosen->id)
+                            ->orWhere('penguji2', $dosen->id)
+                            ->paginate(5); // Paginasi untuk dosen
 
-        $tugasAkhirIds = $tugasakhirs->pluck('id')->toArray();
-        $sidangs1 = Sidang::whereIn('id_tugasakhir', $tugasAkhirIds)->get();
-        $sidangs = Sidang::paginate(10);
+            $tugasakhirs = TugasAkhir::where('pembimbing1', $dosen->nama)
+                                    ->orWhere('pembimbing2', $dosen->nama)
+                                    ->get();
 
-        return view('pages.sidang', compact('sidangs1','sidangs'));
+            $tugasAkhirIds = $tugasakhirs->pluck('id')->toArray();
+            $sidangs1 = Sidang::whereIn('id_tugasakhir', $tugasAkhirIds)->paginate(5); // Paginasi untuk sidangs1
 
-    } elseif (Auth::user()->level == 'kaprodi') {
-        $sidangs = Sidang::all();
-        return view('pages.sidang', compact('sidangs'));
-    } elseif (Auth::user()->level == 'Admin') {
-        $sidangs = Sidang::all();
-        return view('pages.sidang', compact('sidangs'));
-    } else {
-        return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
-    }
+            return view('pages.sidang', compact('sidangs1', 'sidangs'));
+
+        } elseif ($user->level == 'kaprodi' || $user->level == 'Admin') {
+            $sidangs = Sidang::paginate(5); // Paginasi untuk kaprodi dan Admin
+            return view('pages.sidang', compact('sidangs'));
+
+        } else {
+            return redirect()->back()->with('error', 'Anda tidak memiliki izin untuk mengakses halaman ini.');
+        }
+
+
 
     }
     public function filterData(Request $request)
@@ -152,7 +157,7 @@ class SidangController extends Controller
 
         $this->buatnotifikasi(
             'Pemberitahuan',
-            "Sidang dengan ID {$sidang->id} dijadwalkan pada tanggal {$sidang->tanggal}, di ruangan {$sidang->ruangan}, dengan peran sebagai {$role}",
+            "Sidang dengan ID {$sidang->id} dijadwalkan pada tanggal {$sidang->tanggal}, di ruangan {$sidang->ruangan->nama}, dengan peran sebagai {$role}",
             $user->id
         );
     }
@@ -171,7 +176,7 @@ class SidangController extends Controller
 
         $this->buatnotifikasi(
             'Pemberitahuan',
-            'Sidang dengan ID ' .$sidang->id. 'dijadwalkan pada tanggal'. $sidang->tanggal. 'di ruangan'. $sidang->ruangan. 'dengan Ketua sidang:' .$ketuaSidang->nama. 'Sekretaris sidang:' .$sekretarisSidang->nama. 'Penguji 1:' .$penguji1->nama. 'penguji 2:'. $penguji2->nama,
+            'Sidang dengan ID ' .$sidang->id. 'dijadwalkan pada tanggal'. $sidang->tanggal. 'di ruangan'. $sidang->ruangan->nama. 'dengan Ketua sidang:' .$ketuaSidang->nama. 'Sekretaris sidang:' .$sekretarisSidang->nama. 'Penguji 1:' .$penguji1->nama. 'penguji 2:'. $penguji2->nama,
             $mahasiswa->id
         );
         $activityLogController = new ActivityLogController();

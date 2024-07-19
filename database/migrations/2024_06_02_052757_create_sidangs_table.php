@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('id_tugasakhir');
             $table->date('tanggal');
-            $table->integer('ruangan');
+            $table->integer('ruangan_id');
             $table->string('sesi');
             $table->string('ketua_sidang');
             $table->string('sekretaris_sidang');

@@ -96,20 +96,39 @@
             @endif
         </tbody>
     </table>
-    <nav aria-label="...">
+    <nav>
         <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
+            @if ($tugas_akhirs->onFirstPage())
+                <li class="page-item disabled"><span class="page-link">Previous</span></li>
+            @else
+                <li class="page-item"><a class="page-link" href="{{ $tugas_akhirs->previousPageUrl() }}"
+                        rel="prev">Previous</a></li>
+            @endif
+
+            @php
+                $currentPage = $tugas_akhirs->currentPage();
+                $lastPage = $tugas_akhirs->lastPage();
+                $pageRange = 3; // Range of page links to display
+
+                $startPage = max($currentPage - $pageRange, 1);
+                $endPage = min($currentPage + $pageRange, $lastPage);
+            @endphp
+
+            @for ($i = $startPage; $i <= $endPage; $i++)
+                <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
+                    <a class="page-link" href="{{ $tugas_akhirs->url($i) }}">{{ $i }}</a>
+                </li>
+            @endfor
+
+            @if ($tugas_akhirs->hasMorePages())
+                <li class="page-item"><a class="page-link" href="{{ $tugas_akhirs->nextPageUrl() }}"
+                        rel="next">Next</a>
+                </li>
+            @else
+                <li class="page-item disabled"><span class="page-link">Next</span></li>
+            @endif
         </ul>
     </nav>
+
 
 @endsection

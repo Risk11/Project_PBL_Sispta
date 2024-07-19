@@ -29,6 +29,12 @@ class penilaian extends Model
     {
         return $this->belongsTo(Dosen::class, 'id_dosen');
     }
+        public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'id_dosen');
+    }
+
+
 
     public function hitungTotalNilai($request)
     {

@@ -26,7 +26,7 @@ class TugasAkhirController extends Controller
         } elseif(Auth::user()->level == 'Admin'){
             $tugas_akhirs = TugasAkhir::all();
         }
-
+        $tugas_akhirs = TugasAkhir::paginate(5);
         return view('pages.tugas_akhirs', compact('tugas_akhirs'));
     }
     public function show($id)
